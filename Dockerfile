@@ -28,6 +28,8 @@ RUN mkdir work/tempdir
 # We just move the file we need from the repository
 RUN mv gist-files/deployFileModule.js work/src/js
 
+RUN chown -R gitea /work/
+
 # Now all commands will be executed inside the work/ folder
 WORKDIR work
 
@@ -38,7 +40,7 @@ RUN yarn
 # Your gitea server port
 ENV PORT=8080
 # Node server port
-ENV NODE_PORT=3152
+ENV NODE_PORT=3000
 # The key to the backup API we are going to do
 ENV AUTH_KEY="test_key"
 # Your firebase account token
@@ -96,5 +98,6 @@ ENV TMPDIR=/work/tempdir
 
 # The path to download files: /api/node/download?key=$AUTH_KEY&id=gitea-backup-id
 
+USER gitea
 
 ENTRYPOINT [ "bash", "src/scripts/start.sh" ]
